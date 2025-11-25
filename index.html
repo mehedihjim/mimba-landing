@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Poulex – Smart Poultry Farm Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Poulex is a smart poultry farm management platform that integrates feed, health, sales and IoT-based monitoring to boost farm productivity."
+    />
+
+    <style>
+      :root {
+        --bg: #0b1220;
+        --bg-soft: #020617;
+        --primary: #0ea5e9;
+        --primary-soft: rgba(14, 165, 233, 0.1);
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --card-bg: #020617;
+        --border: #1f2937;
+        --accent: #22c55e;
+        --danger: #f97316;
+        --radius-lg: 16px;
+        --radius-xl: 24px;
+        --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.7);
+        --spacing: 18px;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: radial-gradient(circle at top, #1e293b 0, #020617 45%);
+        color: var(--text);
+        line-height: 1.6;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
+
+      .container {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding: 0 16px;
+      }
+
+      /* Header */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(18px);
+        background: linear-gradient(
+          to bottom,
+          rgba(15, 23, 42, 0.95),
+          rgba(15, 23, 42, 0.75),
+          transparent
+        );
+        border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 14px 0;
+      }
+
+      .nav-left {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo-mark {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 20%, #38bdf8, #0f172a);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 18px;
+        box-shadow: 0 8px 20px rgba(56, 189, 248, 0.5);
+      }
+
+      .brand-text {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .brand-text span:first-child {
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        font-size: 13px;
+      }
+
+      .brand-text span:last-child {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 22px;
+        font-size: 14px;
+      }
+
+      .nav-links a {
+        color: var(--muted);
+        padding-bottom: 2px;
+        border-bottom: 2px solid transparent;
+        transition: color 0.15s ease, border-color 0.15s ease;
+      }
+
+      .nav-links a:hover {
+        color: var(--text);
+        border-color: var(--primary);
+      }
+
+      .nav-cta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn {
+        border-radius: 999px;
+        padding: 8px 18px;
+        border: 1px solid transparent;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.15s ease, border-color 0.15s ease,
+          transform 0.1s ease, box-shadow 0.1s ease, color 0.15s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+      }
+
+      .btn-primary {
+        background: linear-gradient(to right, #0ea5e9, #22c55e);
+        color: #0f172a;
+        border-color: rgba(15, 23, 42, 0.7);
+        box-shadow: 0 12px 30px rgba(34, 197, 94, 0.45);
+        font-weight: 600;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 38px rgba(34, 197, 94, 0.55);
+      }
+
+      .btn-ghost {
+        background: rgba(15, 23, 42, 0.7);
+        color: var(--text);
+        border-color: rgba(148, 163, 184, 0.4);
+      }
+
+      .btn-ghost:hover {
+        border-color: var(--primary);
+      }
+
+      .nav-toggle {
+        display: none;
+        width: 34px;
+        height: 34px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .nav-toggle div {
+        width: 16px;
+        height: 2px;
+        background: var(--text);
+        position: relative;
+      }
+
+      .nav-toggle div::before,
+      .nav-toggle div::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 16px;
+        height: 2px;
+        background: var(--text);
+      }
+
+      .nav-toggle div::before {
+        top: -5px;
+      }
+
+      .nav-toggle div::after {
+        top: 5px;
+      }
+
+      /* Hero */
+      .hero {
+        padding: 50px 0 30px;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: 40px;
+        align-items: center;
+      }
+
+      .hero-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 4px 10px 4px 4px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        font-size: 11px;
+        color: var(--muted);
+        margin-bottom: 14px;
+      }
+
+      .hero-pill span {
+        padding: 3px 10px;
+        border-radius: 999px;
+        background: linear-gradient(to right, #22c55e, #0ea5e9);
+        font-weight: 600;
+        font-size: 11px;
+        color: #0f172a;
+      }
+
+      .hero-title {
+        font-size: clamp(30px, 4vw, 40px);
+        line-height: 1.12;
+        font-weight: 800;
+        margin-bottom: 14px;
+      }
+
+      .hero-title span {
+        background: linear-gradient(to right, #22c55e, #0ea5e9);
+        -webkit-background-clip: text;
+        color: transparent;
+      }
+
+      .hero-subtitle {
+        font-size: 14px;
+        color: var(--muted);
+        max-width: 520px;
+        margin-bottom: 16px;
+      }
+
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+
+      .hero-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .hero-meta span::before {
+        content: "•";
+        color: var(--primary);
+      }
+
+      .hero-ctas {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+
+      .hero-footnote {
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .hero-footnote strong {
+        color: #e5e7eb;
+      }
+
+      .hero-card {
+        border-radius: var(--radius-xl);
+        background: radial-gradient(circle at top left, #1f2937, #020617);
+        padding: 18px 16px;
+        box-shadow: var(--shadow-soft);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(56, 189, 248, 0.15),
+          transparent
+        );
+        top: -140px;
+        right: -50px;
+        pointer-events: none;
+      }
+
+      .hero-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+
+      .hero-card-title {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .hero-card-pill {
+        font-size: 11px;
+        background: rgba(34, 197, 94, 0.18);
+        color: #bbf7d0;
+        border-radius: 999px;
+        padding: 3px 8px;
+        border: 1px solid rgba(34, 197, 94, 0.6);
+      }
+
+      .hero-metrics {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 14px;
+        font-size: 11px;
+      }
+
+      .metric-card {
+        background: rgba(15, 23, 42, 0.8);
+        border-radius: 12px;
+        padding: 8px 9px;
+        border: 1px solid rgba(148, 163, 184, 0.4);
+      }
+
+      .metric-label {
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+
+      .metric-value {
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      .metric-tag {
+        margin-top: 2px;
+        font-size: 10px;
+        color: var(--primary);
+      }
+
+      .hero-card-footer {
+        border-top: 1px dashed rgba(148, 163, 184, 0.4);
+        padding-top: 10px;
+        margin-top: 6px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .hero-avatar-group {
+        display: flex;
+        align-items: center;
+      }
+
+      .hero-avatar {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #22c55e, #0ea5e9);
+        border: 2px solid #020617;
+        box-shadow: 0 0 0 1px rgba(148, 163, 184, 0.4);
+        margin-left: -6px;
+      }
+
+      .hero-avatar:first-child {
+        margin-left: 0;
+      }
+
+      .hero-card-footer span strong {
+        color: var(--text);
+      }
+
+      /* Section base */
+      section {
+        padding: 34px 0;
+      }
+
+      .section-header {
+        margin-bottom: 18px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 16px;
+      }
+
+      .section-title {
+        font-size: 18px;
+        font-weight: 700;
+      }
+
+      .section-subtitle {
+        font-size: 13px;
+        color: var(--muted);
+        max-width: 520px;
+      }
+
+      .pill-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.4);
+        color: var(--muted);
+      }
+
+      .pill-label-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--primary);
+      }
+
+      /* Features (Why Poulex) */
+      .feature-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .card {
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        padding: 14px 13px;
+        font-size: 13px;
+      }
+
+      .card:hover {
+        border-color: rgba(56, 189, 248, 0.7);
+      }
+
+      .card-icon {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        margin-bottom: 8px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.5);
+      }
+
+      .card-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .card-text {
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      /* Solutions */
+      .solutions-grid {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .solutions-grid .card {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .solutions-grid .card-tag {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 10px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        color: var(--muted);
+      }
+
+      .card-footer-link {
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--primary);
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* Process */
+      .process-steps {
+        display: grid;
+        gap: 14px;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        font-size: 12px;
+      }
+
+      .step {
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        padding: 12px 11px;
+        border: 1px dashed rgba(148, 163, 184, 0.5);
+        position: relative;
+      }
+
+      .step-number {
+        width: 20px;
+        height: 20px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.7);
+        font-size: 11px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 6px;
+      }
+
+      .step-title {
+        font-weight: 600;
+        margin-bottom: 3px;
+        font-size: 12px;
+      }
+
+      .step-text {
+        color: var(--muted);
+      }
+
+      /* Testimonials & Pricing */
+      .two-column {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      .testimonial {
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        padding: 14px 13px;
+        font-size: 13px;
+      }
+
+      .testimonial-quote {
+        font-style: italic;
+        margin-bottom: 8px;
+        color: #e5e7eb;
+      }
+
+      .testimonial-author {
+        font-size: 12px;
+        color: var(--muted);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        margin-bottom: 6px;
+        padding: 3px 7px;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.15);
+        border: 1px solid rgba(34, 197, 94, 0.5);
+        color: #bbf7d0;
+      }
+
+      .pricing-card {
+        background: var(--card-bg);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        padding: 14px 13px;
+        font-size: 13px;
+      }
+
+      .pricing-columns {
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        font-size: 12px;
+      }
+
+      .pricing-plan {
+        border-radius: 12px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        padding: 10px 9px;
+      }
+
+      .pricing-name {
+        font-weight: 600;
+        margin-bottom: 3px;
+      }
+
+      .pricing-badge {
+        font-size: 10px;
+        color: var(--primary);
+      }
+
+      .pricing-price {
+        font-size: 13px;
+        font-weight: 700;
+        margin: 3px 0;
+      }
+
+      .pricing-list {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 4px;
+      }
+
+      .pricing-list li {
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .pricing-list li::before {
+        content: "✓ ";
+        color: #22c55e;
+      }
+
+      /* Coverage & Partners */
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 11px;
+      }
+
+      .pill {
+        padding: 4px 9px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        color: var(--muted);
+      }
+
+      .logo-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        font-size: 11px;
+        color: var(--muted);
+      }
+
+      .logo-chip {
+        padding: 5px 10px;
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.9);
+        border: 1px solid rgba(148, 163, 184, 0.5);
+      }
+
+      /* Contact */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+        gap: 18px;
+      }
+
+      form {
+        display: grid;
+        gap: 10px;
+      }
+
+      label {
+        font-size: 12px;
+        color: var(--muted);
+        margin-bottom: 2px;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        border-radius: 10px;
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        background: rgba(15, 23, 42, 0.9);
+        padding: 7px 9px;
+        color: var(--text);
+        font-size: 13px;
+      }
+
+      textarea {
+        min-height: 80px;
+        resize: vertical;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.4);
+      }
+
+      .contact-info {
+        font-size: 13px;
+        color: var(--muted);
+      }
+
+      .contact-info p {
+        margin-bottom: 8px;
+      }
+
+      .contact-info strong {
+        color: var(--text);
+      }
+
+      /* Footer */
+      footer {
+        border-top: 1px solid rgba(148, 163, 184, 0.24);
+        padding: 18px 0 22px;
+        font-size: 11px;
+        color: var(--muted);
+        background: rgba(15, 23, 42, 0.95);
+        margin-top: 30px;
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+      }
+
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .footer-links a {
+        color: var(--muted);
+      }
+
+      .footer-links a:hover {
+        color: var(--text);
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .nav-links,
+        .nav-cta {
+          display: none;
+        }
+
+        .nav-toggle {
+          display: inline-flex;
+        }
+
+        .hero-inner {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .hero {
+          padding-top: 32px;
+        }
+
+        .feature-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .solutions-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .process-steps {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .two-column,
+        .contact-grid {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .section-header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .feature-grid,
+        .solutions-grid,
+        .process-steps {
+          grid-template-columns: minmax(0, 1fr);
+        }
+
+        .hero-card {
+          order: -1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="container">
+        <nav class="nav">
+          <div class="nav-left">
+            <div class="logo-mark">P</div>
+            <div class="brand-text">
+              <span>POULEX</span>
+              <span>Smart Poultry Farm Management by USS</span>
+            </div>
+          </div>
+          <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#solutions">Solutions</a>
+            <a href="#process">How It Works</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+          </div>
+          <div class="nav-cta">
+            <a href="#contact" class="btn btn-ghost">Book a Demo</a>
+            <a href="#contact" class="btn btn-primary">
+              Get Started
+              <span>→</span>
+            </a>
+          </div>
+          <button class="nav-toggle" aria-label="Menu (mobile only)">
+            <div></div>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero" id="home">
+        <div class="container hero-inner">
+          <div>
+            <div class="hero-pill">
+              <span>New</span>
+              IoT-enabled poultry management for Bangladesh
+            </div>
+            <h1 class="hero-title">
+              Transforming poultry farms into
+              <span>data-driven businesses.</span>
+            </h1>
+            <p class="hero-subtitle">
+              Poulex connects feed, health, farm environment and sales in a
+              single digital platform – with IoT sensors, dashboards and expert
+              support tailored for poultry farms in Bangladesh.
+            </p>
+            <div class="hero-meta">
+              <span>Real-time farm monitoring</span>
+              <span>Lower mortality & better FCR</span>
+              <span>Traceable, market-ready poultry</span>
+            </div>
+            <div class="hero-ctas">
+              <a href="#solutions" class="btn btn-primary">
+                Explore Solutions
+                <span>↗</span>
+              </a>
+              <a href="#contact" class="btn btn-ghost">Talk to our team</a>
+            </div>
+            <div class="hero-footnote">
+              <strong>Poulex</strong> is a copyrighted product and brand of
+              <strong>United Software Solutions</strong>, founded and led by
+              <strong>Kbd. Md. Tajammul Haque</strong>.
+            </div>
+          </div>
+
+          <aside class="hero-card" aria-label="Farm snapshot">
+            <div class="hero-card-header">
+              <div>
+                <div class="hero-card-title">Farm Snapshot – Live</div>
+                <div class="hero-card-title" style="font-size: 11px">
+                  Layer farm • 12,000 birds • Gazipur
+                </div>
+              </div>
+              <div class="hero-card-pill">Heat & AMR Safe Zone</div>
+            </div>
+            <div class="hero-metrics">
+              <div class="metric-card">
+                <div class="metric-label">House Temp</div>
+                <div class="metric-value">28.4°C</div>
+                <div class="metric-tag">Auto-fans ON</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Mortality</div>
+                <div class="metric-value">-18%</div>
+                <div class="metric-tag">vs. last cycle</div>
+              </div>
+              <div class="metric-card">
+                <div class="metric-label">Egg Output</div>
+                <div class="metric-value">93.2%</div>
+                <div class="metric-tag">Today</div>
+              </div>
+            </div>
+            <div class="hero-card-footer">
+              <div class="hero-avatar-group">
+                <div class="hero-avatar"></div>
+                <div class="hero-avatar"></div>
+                <div class="hero-avatar"></div>
+              </div>
+              <span>
+                Connected farms:
+                <strong>50+ pilots</strong> across Bangladesh
+              </span>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- WHY POULEX -->
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="pill-label">
+                <span class="pill-label-dot"></span>
+                Why Poulex
+              </div>
+              <h2 class="section-title">
+                A full stack for modern poultry farms
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              From small family farms to large commercial operations, Poulex
+              combines practical field experience with digital tools so farmers
+              can monitor birds, plan inputs and sell smarter – instead of
+              relying on guesswork.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <div class="card">
+              <div class="card-icon">📊</div>
+              <div class="card-title">Integrated farm data</div>
+              <p class="card-text">
+                Batch-wise record-keeping for birds, feed, vaccination,
+                mortality, production and expenses – in one place.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-icon">🌡️</div>
+              <div class="card-title">IoT & environment</div>
+              <p class="card-text">
+                Sensors for temperature, humidity, ammonia, methane and more,
+                with automated alerts during heatwaves or high gas levels.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-icon">🧑‍⚕️</div>
+              <div class="card-title">Health & biosecurity</div>
+              <p class="card-text">
+                Vaccination plans, e-prescriptions and biosecurity checklists to
+                reduce disease risk and antibiotic misuse.
+              </p>
+            </div>
+            <div class="card">
+              <div class="card-icon">📦</div>
+              <div class="card-title">Sales & distribution</div>
+              <p class="card-text">
+                Traceable batch IDs, buyer records and simple dashboards to plan
+                sales, contracts and payouts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOLUTIONS -->
+      <section id="solutions">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="pill-label">
+                <span class="pill-label-dot"></span>
+                Solutions
+              </div>
+              <h2 class="section-title">Core Poulex modules</h2>
+            </div>
+            <p class="section-subtitle">
+              Start with a single module or deploy the full stack. Poulex is
+              designed to grow with your farm – without confusing screens or
+              complex setup.
+            </p>
+          </div>
+
+          <div class="solutions-grid">
+            <div class="card">
+              <div class="card-tag">For farm owners</div>
+              <div class="card-icon">🥚</div>
+              <h3 class="card-title">Farm Management & Analytics</h3>
+              <p class="card-text">
+                Batch registration, bird inventory, feed consumption, mortality
+                trends and production analytics with easy-to-read dashboards for
+                each house or shed.
+              </p>
+              <a href="#contact" class="card-footer-link">
+                Request module details <span>↗</span>
+              </a>
+            </div>
+            <div class="card">
+              <div class="card-tag">For veterinarians</div>
+              <div class="card-icon">💊</div>
+              <h3 class="card-title">Health, AMR & e-Prescription</h3>
+              <p class="card-text">
+                Vaccination schedule, treatment records and antibiotic use
+                tracking, with e-prescription support to promote responsible use
+                in line with AMR awareness.
+              </p>
+              <a href="#contact" class="card-footer-link">
+                Talk about AMR module <span>↗</span>
+              </a>
+            </div>
+            <div class="card">
+              <div class="card-tag">For climate-smart farms</div>
+              <div class="card-icon">📡</div>
+              <h3 class="card-title">IoT & Automation</h3>
+              <p class="card-text">
+                Connect temperature, humidity, ammonia and other sensors;
+                control fans, foggers and lights; and receive alerts when birds
+                are under stress due to heat or gas build-up.
+              </p>
+              <a href="#contact" class="card-footer-link">
+                Book an IoT consultation <span>↗</span>
+              </a>
+            </div>
+            <div class="card">
+              <div class="card-tag">For integrators</div>
+              <div class="card-icon">🔗</div>
+              <h3 class="card-title">Traceability & Supply Chain</h3>
+              <p class="card-text">
+                Assign batch IDs, capture farm practices and share traceable
+                data with processors, retailers or export buyers to build
+                premium branded chicken and eggs.
+              </p>
+              <a href="#contact" class="card-footer-link">
+                Explore traceability flows <span>↗</span>
+              </a>
+            </div>
+            <div class="card">
+              <div class="card-tag">For finance partners</div>
+              <div class="card-icon">📈</div>
+              <h3 class="card-title">Performance & Risk Analytics</h3>
+              <p class="card-text">
+                Monitor farm performance indicators and production risk to
+                support micro-insurance, credit scoring or climate-smart
+                investment programs.
+              </p>
+              <a href="#contact" class="card-footer-link">
+                Discuss partnerships <span>↗</span>
+              </a>
+            </div>
+            <div class="card">
+              <div class="card-tag">Coming soon</div>
+              <div class="card-icon">🛒</div>
+              <h3 class="card-title">Poulex Shop</h3>
+              <p class="card-text">
+                A curated marketplace for feed, vaccines, health supplies and
+                IoT devices integrated directly with your Poulex farm records.
+              </p>
+              <span class="card-footer-link" style="color: var(--muted)"
+                >Launching shortly</span
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROCESS -->
+      <section id="process">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="pill-label">
+                <span class="pill-label-dot"></span>
+                How it works
+              </div>
+              <h2 class="section-title">Simple onboarding in four steps</h2>
+            </div>
+            <p class="section-subtitle">
+              Poulex follows a guided implementation – from farm registration to
+              device installation and training – so your team can start using
+              the system in days, not months.
+            </p>
+          </div>
+
+          <div class="process-steps">
+            <div class="step">
+              <div class="step-number">1</div>
+              <div class="step-title">Farm & batch setup</div>
+              <p class="step-text">
+                We register your farm, houses and batches; set basic parameters
+                like bird type, cycle length and production targets.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-number">2</div>
+              <div class="step-title">Module selection</div>
+              <p class="step-text">
+                You choose which modules to start with – farm data, health, IoT
+                – and we configure access for farm staff and supervisors.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-number">3</div>
+              <div class="step-title">Deploy & train</div>
+              <p class="step-text">
+                Our team installs IoT devices (if needed), trains your team on
+                mobile/desktop use and checks data quality for the first cycles.
+              </p>
+            </div>
+            <div class="step">
+              <div class="step-number">4</div>
+              <div class="step-title">Monitor & scale</div>
+              <p class="step-text">
+                Review dashboards, track KPIs and gradually add more sheds, more
+                batches or partner farms as you grow.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TESTIMONIALS + PRICING -->
+      <section>
+        <div class="container two-column">
+          <div>
+            <div class="section-header">
+              <div>
+                <div class="pill-label">
+                  <span class="pill-label-dot"></span>
+                  Farmer stories
+                </div>
+                <h2 class="section-title">Results from early adopters</h2>
+              </div>
+            </div>
+
+            <div class="testimonial">
+              <div class="badge">Verified pilot farm</div>
+              <p class="testimonial-quote">
+                “Before Poulex we used notebooks and memory. Now we see feed
+                conversion, mortality and production trends in one dashboard. It
+                helped us reduce losses during heatwaves.”
+              </p>
+              <p class="testimonial-author">
+                — Farm owner, 10,000-bird layer farm, Mymensingh
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-header">
+              <div>
+                <div class="pill-label">
+                  <span class="pill-label-dot"></span>
+                  Plans
+                </div>
+                <h2 class="section-title">Start small, grow anytime</h2>
+              </div>
+            </div>
+
+            <div class="pricing-card">
+              <div class="pricing-columns">
+                <div class="pricing-plan">
+                  <div class="pricing-name">
+                    Basic
+                    <span class="pricing-badge">For small farms</span>
+                  </div>
+                  <div class="pricing-price">Up to 5,000 birds</div>
+                  <ul class="pricing-list">
+                    <li>Farm & batch management</li>
+                    <li>Production & mortality dashboards</li>
+                    <li>Basic health & vaccination records</li>
+                  </ul>
+                </div>
+                <div class="pricing-plan">
+                  <div class="pricing-name">
+                    Premium
+                    <span class="pricing-badge">For integrators</span>
+                  </div>
+                  <div class="pricing-price">Custom – by proposal</div>
+                  <ul class="pricing-list">
+                    <li>All Basic features</li>
+                    <li>IoT & automation integration</li>
+                    <li>Traceability & multi-farm analytics</li>
+                  </ul>
+                </div>
+              </div>
+              <p style="font-size: 11px; color: var(--muted); margin-top: 8px">
+                Pricing is tailored to farm size, device requirements and
+                support level. Share your farm details and we’ll prepare a
+                proposal in BDT.
+              </p>
+              <a href="#contact" class="card-footer-link">
+                Get a pricing proposal <span>↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- COVERAGE & PARTNERS -->
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="pill-label">
+                <span class="pill-label-dot"></span>
+                Network
+              </div>
+              <h2 class="section-title">
+                Where Poulex is active and who we work with
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              Poulex is built in Bangladesh for Bangladeshi poultry farmers –
+              with a roadmap to connect to regional and global partners in the
+              poultry value chain.
+            </p>
+          </div>
+
+          <div
+            style="display: grid; gap: 14px; grid-template-columns: 2fr 1.2fr"
+          >
+            <div>
+              <h3 style="font-size: 13px; margin-bottom: 6px">
+                Coverage in Bangladesh
+              </h3>
+              <div class="pill-row">
+                <div class="pill">Dhaka</div>
+                <div class="pill">Gazipur</div>
+                <div class="pill">Kishoreganj</div>
+                <div class="pill">Mymensingh</div>
+                <div class="pill">Joypurhat</div>
+                <div class="pill">Dinajpur</div>
+                <div class="pill">Rangpur</div>
+                <div class="pill">Thakurgaon</div>
+              </div>
+            </div>
+            <div>
+              <h3 style="font-size: 13px; margin-bottom: 6px">
+                Awards & recognitions
+              </h3>
+              <div class="logo-row">
+                <span class="logo-chip">Innovation & agritech awards</span>
+                <span class="logo-chip">Pilot projects with partners</span>
+                <span class="logo-chip"
+                  >Portfolio of United Software Solutions</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="pill-label">
+                <span class="pill-label-dot"></span>
+                About Poulex
+              </div>
+              <h2 class="section-title">Built by livestock and tech experts</h2>
+            </div>
+          </div>
+          <p class="section-subtitle" style="max-width: 820px">
+            Poulex is a copyrighted product and brand of
+            <strong>United Software Solutions (USS)</strong>, led by
+            <strong>Kbd. Md. Tajammul Haque</strong>. With over a decade of
+            experience in agritech, livestock and poultry value chains, our team
+            designs practical digital tools that work in real farms – with
+            field-tested workflows, local language support and training for farm
+            staff.
+          </p>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <div class="container">
+          <div class="section-header">
+            <div>
+              <div class="pill-label">
+                <span class="pill-label-dot"></span>
+                Get in touch
+              </div>
+              <h2 class="section-title">
+                Share your farm details and we’ll take it from there
+              </h2>
+            </div>
+            <p class="section-subtitle">
+              Tell us about your farm, birds and current challenges. Our team
+              will propose the right Poulex setup, including modules, IoT
+              devices and an implementation plan.
+            </p>
+          </div>
+
+          <div class="contact-grid">
+            <form>
+              <div>
+                <label for="name">Name</label>
+                <input
+                  id="name"
+                  type="text"
+                  placeholder="Your full name"
+                  required
+                />
+              </div>
+              <div>
+                <label for="farm">Farm / organization</label>
+                <input
+                  id="farm"
+                  type="text"
+                  placeholder="Farm or company name"
+                />
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input
+                  id="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+              <div>
+                <label for="phone">Phone / WhatsApp</label>
+                <input id="phone" type="tel" placeholder="+8801XXXXXXXXX" />
+              </div>
+              <div>
+                <label for="birds">Approx. number of birds</label>
+                <select id="birds">
+                  <option value="">Select</option>
+                  <option value="small">Up to 5,000</option>
+                  <option value="medium">5,000 – 20,000</option>
+                  <option value="large">20,000 – 100,000</option>
+                  <option value="xl">100,000+</option>
+                </select>
+              </div>
+              <div>
+                <label for="modules">Interested modules</label>
+                <input
+                  id="modules"
+                  type="text"
+                  placeholder="Farm data, IoT, health, traceability…"
+                />
+              </div>
+              <div>
+                <label for="message">Current challenges / message</label>
+                <textarea
+                  id="message"
+                  placeholder="Describe your farm, current issues and what you want to improve."
+                ></textarea>
+              </div>
+              <div>
+                <button class="btn btn-primary" type="submit">
+                  Submit inquiry
+                </button>
+              </div>
+            </form>
+
+            <div class="contact-info">
+              <p>
+                <strong>Head Office (Registered):</strong><br />
+                Tarafder House, 7 no Ward, Trishal Municipality,<br />
+                Mymensingh, Bangladesh
+              </p>
+              <p>
+                <strong>Email:</strong> info@poulex.farm<br />
+                <strong>Phone:</strong> +8801xxxxxxxxx
+              </p>
+              <p>
+                <strong>Office hours:</strong><br />
+                Saturday – Thursday, 10:00 AM – 6:00 PM (GMT+6)
+              </p>
+              <p>
+                For partnerships, pilots or research collaboration, please
+                mention
+                <strong>“Partnership”</strong> in the subject line when you
+                contact us.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="container footer-inner">
+        <div>
+          © <span id="year"></span> Poulex – A product of United Software
+          Solutions. All rights reserved.
+        </div>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#solutions">Solutions</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Set current year
+      document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
+  </body>
+</html>
