@@ -15,6 +15,8 @@
             <div class="hidden lg:flex items-center space-x-6">
                 <a href="#home"
                     class="nav-link font-medium hover:text-[#5CB247] transition-colors duration-200">{{ __('translation.home') }}</a>
+                <a href="#about"
+                    class="nav-link font-medium hover:text-[#5CB247] transition-colors duration-200">{{ __('translation.about_us') }}</a>
 
                 {{-- Services Dropdown --}}
                 <div class="relative group">
@@ -44,8 +46,6 @@
                     class="nav-link font-medium hover:text-[#5CB247] transition-colors duration-200">{{ __('translation.partners') }}</a>
                 <a href="#awards"
                     class="nav-link font-medium hover:text-[#5CB247] transition-colors duration-200">{{ __('translation.awards') }}</a>
-                <a href="#about"
-                    class="nav-link font-medium hover:text-[#5CB247] transition-colors duration-200">{{ __('translation.about_us') }}</a>
                 <a href="#contact"
                     class="nav-link font-medium hover:text-[#5CB247] transition-colors duration-200">{{ __('translation.contact_us') }}</a>
             </div>

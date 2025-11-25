@@ -17,9 +17,11 @@
             </div>
 
             {{-- Digital Transformation Journey Timeline --}}
-            <div class="relative">
-                <h3 class="text-2xl font-bold text-gray-900 mb-10 text-center">Digital Transformation Journey</h3>
+            <div class="mb-10">
+                <h3 class="text-2xl font-bold text-gray-900 text-center">Digital Transformation Journey</h3>
+            </div>
 
+            <div class="relative">
                 {{-- Vertical Timeline Line --}}
                 <div
                     class="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-[#5CB247]/30 transform md:-translate-x-1/2">
